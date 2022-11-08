@@ -41,7 +41,7 @@ public static class EquationGenerator
                 sum += prod * sum1;
             }
 
-            coeffs[p + 1] = sum;
+            coeffs[p + 1] = sum * (p % 2 == 1 ? 1 : -1);
         }
         return EquationWriter.GenerateEquationWithKoefs(coeffs);
     }
