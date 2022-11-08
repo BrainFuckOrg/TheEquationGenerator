@@ -111,11 +111,14 @@ namespace EquationGenerator
             Int16 solution2 = (Int16)random.Next(minSopution, maxSolution);
             return GenerateEquationWithSolution(solution1, solution2);
         }
+        
+        public 
         static void Main()
         {
-            Console.WriteLine(EquationGenerator.GenerateEquationSecondDegree(-10,10));
-            Console.WriteLine(EquationGenerator.GenerateEquationFirstDegree(-10,10));
-            Console.WriteLine(EquationGenerator.GenerateEquationSecondDegree(-100,100));
+            //Console.WriteLine(EquationGenerator.GenerateEquationSecondDegree(-10,10));
+            //Console.WriteLine(EquationGenerator.GenerateEquationFirstDegree(-10,10));
+            //Console.WriteLine(EquationGenerator.GenerateEquationSecondDegree(-100,100));
+            Console.WriteLine(EquationWriter.GenerateEquationWithKoefs(new []{3,5,8,7,3,4,4,4,4,4,4,4,4,4,4,123124}));
         }
     }
 }
