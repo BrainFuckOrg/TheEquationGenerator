@@ -24,23 +24,25 @@ public static class EquationGenerator
         for (int p = 0; p < n; p++)
         {
             Int32 sum = 0;
-            for (Int32 q = 1; q < n-p; q++)
+            for (Int32 q = 1; q <= n-p; q++)
             {
                 Int32 prod = 1;
-                for (Int32 k = q; k < q+p-1; k++)
+                for (Int32 k = q; k <= q+p-1; k++)
                 {
                     prod *= solution[k - 1];
                 }
 
                 Int32 sum1 = 0;
-                for (Int32 i = q+p; i < n; i++)
+                prod = p == 0 && q > 1 ? 0 : prod;
+                for (Int32 i = q+p; i <= n; i++)
                 {
                     sum1 += solution[i - 1];
                 }
+                Console.WriteLine(p+") "+prod+" " + sum1);
 
                 sum += prod * sum1;
             }
-
+            Console.WriteLine("--- "+p+") "+sum);
             coeffs[p + 1] = sum * (p % 2 == 1 ? 1 : -1);
         }
         return EquationWriter.GenerateEquationWithKoefs(coeffs);
