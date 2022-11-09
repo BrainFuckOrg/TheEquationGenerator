@@ -16,10 +16,10 @@ public static class EquationGenerator
         return EquationWriter.GenerateEquationWithKoefs(new[] { 1, coeff1, coeff2 });
     }
     
-    public static String GenerateEquationWithSolution(Int16 []solution)
+    /*public static String GenerateEquationWithSolution(Int16 []solution)
     {
 
-    }
+    }*/
     public static String GenerateEquationWithSolutionSanya(Int16 []solution)
     {
         int[] coeffs = new int[solution.Length+1];
