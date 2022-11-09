@@ -4,7 +4,7 @@ public static class EquationGenerator
     /*Class for generation Equation*/
 {
 
-    public static String GenerateEquationWithSolution(Int16 []solution)
+    private static String GenerateEquationWithSolution(Int16 []solution)
     {
         Int32[] coeff = new Int32[solution.Length+1];
         coeff[0] = 1;
@@ -37,8 +37,8 @@ public static class EquationGenerator
     {
         int[] coeffs = new int[solution.Length+1];
         for (int i = 0; i < coeffs.Length - 2; i++) coeffs[i] = 0;
-        coeffs[coeffs.Length - 1] = -solution[0];
-        coeffs[coeffs.Length - 2] = 1;
+        coeffs[^1] = -solution[0];
+        coeffs[^2] = 1;
         for (int i = 1; i < solution.Length; i++)
         for (int j = 0; j < coeffs.Length; j++)
             coeffs[j] = (j!=coeffs.Length-1?coeffs[j + 1]:0) - coeffs[j] * solution[i];
