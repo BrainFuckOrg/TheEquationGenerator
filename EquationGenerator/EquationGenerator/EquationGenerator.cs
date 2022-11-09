@@ -20,7 +20,17 @@ public static class EquationGenerator
     {
 
     }
-
+    public static String GenerateEquationWithSolutionSanya(Int16 []solution)
+    {
+        int[] coeffs = new int[solution.Length+1];
+        for (int i = 0; i < coeffs.Length - 2; i++) coeffs[i] = 0;
+        coeffs[coeffs.Length - 1] = -solution[0];
+        coeffs[coeffs.Length - 2] = 1;
+        for (int i = 1; i < solution.Length; i++)
+        for (int j = 0; j < coeffs.Length; j++)
+            coeffs[j] = (j!=coeffs.Length-1?coeffs[j + 1]:0) - coeffs[j] * solution[i];
+        return EquationWriter.GenerateEquationWithKoefs(coeffs);
+    }
     public static String GenerateEquationFirstDegree(Int16 minSopution, Int16 maxSolution)
     {
         Random random = new Random();
