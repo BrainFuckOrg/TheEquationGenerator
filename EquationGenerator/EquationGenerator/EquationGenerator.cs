@@ -4,22 +4,35 @@ public static class EquationGenerator
     /*Class for generation Equation*/
 {
 
-    private static String GenerateEquationWithSolution(Int16 solution1)
+    public static String GenerateEquationWithSolution(Int16 []solution)
     {
-        return EquationWriter.GenerateEquationWithKoefs(new[] { 1, -solution1 });
+        Int32[] coeff = new Int32[solution.Length+1];
+        coeff[0] = 1;
+        for (Int16 i = 0; i < solution.Length; i++)
+        {
+            coeff[i+1] = GenerateCoeff(i, solution)*(i%2==1?1:-1);
+        }
+        return EquationWriter.GenerateEquationWithKoefs(coeff);
+
     }
 
-    private static String GenerateEquationWithSolution(Int16 solution1, Int16 solution2)
+    private static Int32 GenerateCoeff(Int16 coefNumm, Int16[] solution, Int32 minNum=0)
     {
-        Int32 coeff1 = -(solution1 + solution2);
-        Int32 coeff2 = solution1 * solution2;
-        return EquationWriter.GenerateEquationWithKoefs(new[] { 1, coeff1, coeff2 });
-    }
-    
-    /*public static String GenerateEquationWithSolution(Int16 []solution)
-    {
+        Int32 sum = 0;
+        for (Int32 i = minNum; i < solution.Length-coefNumm; i++)
+        {
+            if (coefNumm>0)
+            {
+                sum += solution[i] * GenerateCoeff((Int16)(coefNumm - 1),solution,i+1);
+            }
+            else
+            {
+                sum += solution[i];
+            }
+        }
 
-    }*/
+        return sum;
+    }
     public static String GenerateEquationWithSolutionSanya(Int16 []solution)
     {
         int[] coeffs = new int[solution.Length+1];
@@ -31,18 +44,16 @@ public static class EquationGenerator
             coeffs[j] = (j!=coeffs.Length-1?coeffs[j + 1]:0) - coeffs[j] * solution[i];
         return EquationWriter.GenerateEquationWithKoefs(coeffs);
     }
-    public static String GenerateEquationFirstDegree(Int16 minSopution, Int16 maxSolution)
-    {
-        Random random = new Random();
-        Int16 solution1 = (Int16)random.Next(minSopution, maxSolution);
-        return GenerateEquationWithSolution(solution1);
-    }
 
-    public static String GenerateEquationSecondDegree(Int16 minSopution, Int16 maxSolution)
+    public static String GenerateEquationNDegree(Int16 minSopution, Int16 maxSolution, Int16 n)
     {
+        Int16[] solution = new Int16[n];
         Random random = new Random();
-        Int16 solution1 = (Int16)random.Next(minSopution, maxSolution);
-        Int16 solution2 = (Int16)random.Next(minSopution, maxSolution);
-        return GenerateEquationWithSolution(solution1, solution2);
+        for (int i = 0; i < solution.Length; i++)
+        {
+            solution[i] = (Int16)random.Next(minSopution, maxSolution);
+        }
+        
+        return GenerateEquationWithSolution(solution);
     }
 }
