@@ -1,4 +1,7 @@
+using System.Numerics;
+
 namespace EquationGenerator;
+
 
 public static class EquationGenerator
     /*Class for generation Equation*/
@@ -45,6 +48,18 @@ public static class EquationGenerator
         return EquationWriter.GenerateEquationWithKoefs(coeffs);
     }
 
+    public static String GenerateEquationWithSolutionSanya2(Int16[] solution)
+    {
+        BigInteger[] coeffs = new BigInteger[solution.Length + 1];
+        for (int i = 0; i < coeffs.Length - 2; i++) coeffs[i] = 0;
+        coeffs[^1] = -solution[0];
+        coeffs[^2] = 1;
+        for (int i = 1; i < solution.Length; i++)
+        for (int j = 0; j < coeffs.Length; j++)
+            coeffs[j] = (j!=coeffs.Length-1?coeffs[j + 1]:0) - coeffs[j] * solution[i];
+        return EquationWriter.GenerateEquationWithKoefs(coeffs);
+    }
+
     public static String GenerateEquationNDegree(Int16 minSopution, Int16 maxSolution, Int16 n)
     {
         Int16[] solution = new Int16[n];
@@ -54,6 +69,7 @@ public static class EquationGenerator
             solution[i] = (Int16)random.Next(minSopution, maxSolution);
         }
         
-        return GenerateEquationWithSolution(solution);
+        //return GenerateEquationWithSolution(solution);
+        return GenerateEquationWithSolutionSanya2(solution);
     }
 }

@@ -25,7 +25,29 @@ public static class EquationWriter
             
             return equation;
         }
+        public static String GenerateEquationWithKoefs(System.Numerics.BigInteger[] coeffs)
+        {
+            if (coeffs.Length < 2)
+            {
+                throw new Exception("Too few koefs");
+            }
 
+            String equation = "";
+            UInt16 extant = (UInt16)(coeffs.Length - 1);
+            Int16 coeffNum = 0;
+            Boolean withSpaces = false;
+
+            do
+            {
+                equation += XWithCoeff(coeffs[coeffNum++], extant, ref withSpaces);
+            } while (extant-- > 0);
+            {
+                
+            }
+            equation += " = 0";
+            
+            return equation;
+        }
         private static String XWithCoeff(Int32 coeff, UInt16 extant, ref Boolean withSpaces)
         {
             String equation = "";
@@ -47,8 +69,44 @@ public static class EquationWriter
             equation += extant == 1 ? "" : SupNumber(extant);
             return equation;
         }
+        private static String XWithCoeff(System.Numerics.BigInteger coeff, UInt16 extant, ref Boolean withSpaces)
+        {
+            String equation = "";
+            if (coeff == 0)
+            {
+                return "";
+            }
 
+            equation += RightStringNumber(coeff, ref withSpaces);
+            
+            if (extant == 0)
+            {
+                equation += coeff>0?coeff:-coeff;
+                return equation;
+            }
+            
+            equation += coeff>0?coeff:-coeff == 1 ? "" : coeff>0?coeff:-coeff;
+            equation +=  "x";
+            equation += extant == 1 ? "" : SupNumber(extant);
+            return equation;
+        }
         private static String RightStringNumber(Int32 coeff, ref Boolean withSpaces)
+        {
+            String equation = "";
+
+            if (withSpaces)
+            {
+                equation += coeff > 0 ? " + " : " - ";
+            }
+            else
+            {
+                withSpaces = true;
+                equation += coeff > 0 ? "": "-";
+            }
+            return equation;
+            
+        }
+        private static String RightStringNumber(System.Numerics.BigInteger coeff, ref Boolean withSpaces)
         {
             String equation = "";
 
