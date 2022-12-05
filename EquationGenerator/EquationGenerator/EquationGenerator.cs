@@ -60,16 +60,23 @@ public static class EquationGenerator
         return EquationWriter.GenerateEquationWithKoefs(coeffs);
     }
 
-    public static String GenerateEquationNDegree(Int16 minSopution, Int16 maxSolution, Int16 n)
+    public static Int16[] Answers;
+    public static String GenerateEquationNDegree(Int16 minSolution, Int16 maxSolution, Int16 n)
     {
-        Int16[] solution = new Int16[n];
-        Random random = new Random();
-        for (int i = 0; i < solution.Length; i++)
+        Answers = new Int16[maxSolution - minSolution+1];
+        for (int i = 0; i < maxSolution; i++)
         {
-            solution[i] = (Int16)random.Next(minSopution, maxSolution);
+            Answers[i] = 0;
+        }
+        Int16[] Solution = new Int16[n];
+        Random random = new Random();
+        for (int i = 0; i < Solution.Length; i++)
+        {
+            int index=Solution[i] = (Int16)random.Next(minSolution, maxSolution+1);
+            Answers[index - minSolution]++;
         }
         
         //return GenerateEquationWithSolution(solution);
-        return GenerateEquationWithSolutionSanya2(solution);
+        return GenerateEquationWithSolutionSanya2(Solution);
     }
 }
