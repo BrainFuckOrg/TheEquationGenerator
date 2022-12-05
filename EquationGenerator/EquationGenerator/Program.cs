@@ -1,22 +1,29 @@
 ﻿using System;
+using System.Diagnostics;
 using Console = System.Console;
 
 namespace EquationGenerator
 {
     
-    public static class Program{
+    public static class Program
+    {
+        public static Boolean showProgress;
         public static void Main()
         {
             Int16 minSolution = 1;
             Int16 maxSolution = 10;
-            Int16 n = 50;
+            Int16 n = 5000;
             //Console.WriteLine(EquationGenerator.GenerateEquationSecondDegree(-10,10));
             //Console.WriteLine(EquationGenerator.GenerateEquationFirstDegree(-10,10));
             //Console.WriteLine(EquationGenerator.GenerateEquationSecondDegree(-100,100));
             //Console.WriteLine(EquationWriter.GenerateEquationWithKoefs(new []{3,5,8,7,3,4,4,4,4,4,4,4,4,4,4,123124}));
             //Console.WriteLine(EquationGenerator.GenerateEquationWithSolution(new Int16[]{1,1,1}));
             //Console.WriteLine(EquationGenerator.GenerateEquationNDegree(1,10,5000));
+            Console.WriteLine("show progress bar?");
+            showProgress = Console.ReadLine() == "y";
             Console.WriteLine("Load to file? y/n");
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             if (Console.ReadLine() == "y")
             {
                 Console.WriteLine("select file path for equation, if it doesn't exist it will be created");
@@ -47,6 +54,8 @@ namespace EquationGenerator
                     Console.WriteLine("{0} ({1} times)",i,EquationGenerator.Answers[i-minSolution]);
                 }
             }
+
+            Console.WriteLine(stopwatch.ElapsedMilliseconds+" milliseconds");
         }
     }
 }

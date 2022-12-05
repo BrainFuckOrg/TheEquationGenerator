@@ -55,8 +55,20 @@ public static class EquationGenerator
         coeffs[^1] = -solution[0];
         coeffs[^2] = 1;
         for (int i = 1; i < solution.Length; i++)
-        for (int j = 0; j < coeffs.Length; j++)
-            coeffs[j] = (j!=coeffs.Length-1?coeffs[j + 1]:0) - coeffs[j] * solution[i];
+        {
+            for (int j = 0; j < coeffs.Length; j++)
+            {
+                coeffs[j] = (j != coeffs.Length - 1 ? coeffs[j + 1] : 0) - coeffs[j] * solution[i];
+            }
+
+            if (Program.showProgress)
+            {
+                if(i>0)Console.SetCursorPosition(0,Console.GetCursorPosition().Top-1);
+                Console.WriteLine((i*100)/solution.Length+ "%done  ");
+                
+            }
+        }
+
         return EquationWriter.GenerateEquationWithKoefs(coeffs);
     }
 
